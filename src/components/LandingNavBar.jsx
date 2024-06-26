@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
+
 function LandingNavBar() {
   return (
     <>
       <div>
         <h5>ELEVATE</h5>
         <div>
-          <a href="#">Home</a>
-          <a href="#">Login</a>
-          <a href="#">Sign up</a>
+          <Link to="/home">Home</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign up</Link>
         </div>
       </div>
     </>
