@@ -1,0 +1,8 @@
+.nav-bar {
+  height: 50px;
+}
+
+.loading-container {
+  height: calc(100vh - 50px);
+  width: 100vw;
+}

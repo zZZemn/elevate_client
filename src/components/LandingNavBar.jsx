@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function LandingNavBar() {
   return (
     <>
-      <div className="flex justify-between bg-black text-white py-3">
+      <div className="nav-bar flex justify-between bg-black text-white py-3">
         <h5 className="mx-5">ELEVATE</h5>
         <div>
           <Link className="mx-5" to="/home">Home</Link>
