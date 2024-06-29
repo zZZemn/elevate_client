@@ -6,3 +6,13 @@
   height: calc(100vh - 50px);
   width: 100vw;
 }
+
+.bg-login {
+  height: calc(100vh - 50px);
+  background-image: url("https://images.pexels.com/photos/1843717/pexels-photo-1843717.jpeg?auto=compress&cs=tinysrgb&w=1200");
+  background-size: "cover";
+}
+
+.bg-login-form {
+  background-color: white;
+}
