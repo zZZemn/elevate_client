@@ -1,6 +1,6 @@
 import LandingNavBar from "../components/LandingNavBar";
-import FormBtnSubmit from "../components/formBtnSubmit";
-import FormTextField from "../components/formTextField";
+import FormBtnSubmit from "../components/FormBtnSubmit";
+import FormTextField from "../components/FormTextField";
 
 function Login() {
   return (

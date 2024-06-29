@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LandingNavBar from "../components/LandingNavBar";
 import Loading from "../components/Loading";
-import FormBtnSubmit from "../components/formBtnSubmit";
-import FormSelect from "../components/formSelect";
-import FormTextField from "../components/formTextField";
+import FormBtnSubmit from "../components/FormBtnSubmit";
+import FormTextField from "../components/FormTextField";
+import FormSelect from "../components/FormSelect";
 
 function Signup() {
   const apiUrl = import.meta.env.VITE_API_URL;
