@@ -1,4 +1,4 @@
-function FormSelect({ label, professions }) {
+function FormSelect({ label, name, value, professions, onChange }) {
   return (
     <>
       <div className="relative w-full max-w-sm mt-3">
@@ -9,8 +9,9 @@ function FormSelect({ label, professions }) {
           {label}
         </label>
         <select
-          name=""
-          id=""
+          name={name}
+          value={value}
+          onChange={onChange}
           className="w-full max-w-sm border border-gray-900 rounded-lg p-2 pt-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
           style={{ fontSize: "14px" }}
         >
