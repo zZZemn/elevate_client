@@ -49,6 +49,7 @@ function Signup() {
       .then((response) => {
         if (response.status === 200) {
           console.log("Form submitted successfully:", response.data);
+          sessionStorage.setItem("ctoken", response.data._id);
         } else {
           console.error("Form submission failed with status:", response.data);
         }
