@@ -1,7 +1,10 @@
 function Loading() {
   return (
     <>
-      <div className="loading-container flex items-center justify-center bg-slate-100">
+      <div
+        className="loading-container flex items-center justify-center absolute z-10"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.55)" }}
+      >
         <div
           className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status"
