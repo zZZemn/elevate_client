@@ -1,11 +1,16 @@
+import { useState } from "react";
 import LogoutIcon from "../../../components/Icons/LogoutIcon";
 import ProfileIcon from "../../../components/Icons/ProfileIcon";
 import SettingsIcon from "../../../components/Icons/SettingsIcon";
 
-function SideBar() {
+function SideBar(sideBar) {
   return (
     <>
-      <div className="bg-black text-white absolute p-5 right-0">
+      <div
+        className={`bg-black text-white absolute p-5 right-0 sm:hidden ${
+          sideBar && "flex"
+        }`}
+      >
         <ul>
           <li className="py-2">
             <button className="flex">
