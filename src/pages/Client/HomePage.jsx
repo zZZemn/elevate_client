@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -32,8 +34,9 @@ function HomePage() {
   return (
     <>
       <h1>
+        <NavBar />
+        <SideBar />
         <center>Client</center>
-        <button onClick={handleLogout}>Log Out</button>
       </h1>
     </>
   );
