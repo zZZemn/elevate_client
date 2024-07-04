@@ -3,7 +3,7 @@ import HeartIcon from "../components/Icons/HeartIcon";
 import CommentIcon from "../components/Icons/CommentIcon";
 import ShareIcon from "../components/Icons/ShareIcon";
 
-function Post({ post }) {
+function Post({ post, btnLikeDisable, btnCommentDisable, btnShareDisable }) {
   return (
     <>
       <div key={post._id} className="bg-white p-2 rounded shadow w-4/5">
@@ -24,9 +24,18 @@ function Post({ post }) {
           />
         </div>
         <div className="flex mt-2">
-          <PostActionButton IconComponent={HeartIcon} isDisabled={true} />
-          <PostActionButton IconComponent={CommentIcon} isDisabled={true} />
-          <PostActionButton IconComponent={ShareIcon} isDisabled={false} />
+          <PostActionButton
+            IconComponent={HeartIcon}
+            isDisabled={btnLikeDisable}
+          />
+          <PostActionButton
+            IconComponent={CommentIcon}
+            isDisabled={btnCommentDisable}
+          />
+          <PostActionButton
+            IconComponent={ShareIcon}
+            isDisabled={btnShareDisable}
+          />
         </div>
       </div>
     </>
