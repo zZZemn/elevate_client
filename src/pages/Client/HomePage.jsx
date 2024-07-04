@@ -9,7 +9,7 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const ctoken = sessionStorage.getItem("ctoken");
-  const [sideBar, setSideBar] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);
 
   useEffect(() => {
     axios
@@ -33,15 +33,15 @@ function HomePage() {
   console.log(ctoken);
 
   const handleSideBar = () => {
-    setSideBar(!sideBar);
-    console.log(sideBar);
+    setShowSideBar(!showSideBar);
+    console.log(showSideBar);
   };
 
   return (
     <>
       <h1>
         <NavBar handleSideBar={handleSideBar} />
-        {sideBar && <SideBar />}
+        {showSideBar && <SideBar handleLogout={handleLogout} />}
         <center>Client</center>
       </h1>
     </>
