@@ -3,14 +3,10 @@ import LogoutIcon from "../../../components/Icons/LogoutIcon";
 import ProfileIcon from "../../../components/Icons/ProfileIcon";
 import SettingsIcon from "../../../components/Icons/SettingsIcon";
 
-function SideBar(sideBar) {
+function SideBar({ handleLogout }) {
   return (
     <>
-      <div
-        className={`bg-black text-white absolute p-5 right-0 sm:hidden ${
-          sideBar && "flex"
-        }`}
-      >
+      <div className="bg-black text-white absolute p-5 right-0 sm:hidden">
         <ul>
           <li className="py-2">
             <button className="flex">
@@ -23,7 +19,7 @@ function SideBar(sideBar) {
             </button>
           </li>
           <li className="py-2">
-            <button className="flex">
+            <button className="flex" onClick={handleLogout}>
               <LogoutIcon /> <span className="mx-2">Log Out</span>
             </button>
           </li>
