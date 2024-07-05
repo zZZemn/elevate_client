@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Post from "../../components/Post";
 import Loading from "../../components/Loading";
+import PostButton from "./components/PostButton";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -54,16 +55,21 @@ function HomePage() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          {dataPosts.map((post) => (
-            <Post
-              key={post._id}
-              post={post}
-              btnLikeDisable={false}
-              btnCommentDisable={false}
-              btnShareDisable={false}
-            />
-          ))}
+        <div className="p-5">
+          <div className="flex justify-end">
+            <PostButton />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
+            {dataPosts.map((post) => (
+              <Post
+                key={post._id}
+                post={post}
+                btnLikeDisable={false}
+                btnCommentDisable={false}
+                btnShareDisable={false}
+              />
+            ))}
+          </div>
         </div>
       )}
     </>
