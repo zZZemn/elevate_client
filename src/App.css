@@ -5,6 +5,10 @@
 .loading-container {
   height: calc(100vh - 50px);
   width: 100vw;
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* s */
