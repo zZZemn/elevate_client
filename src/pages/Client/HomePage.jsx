@@ -5,15 +5,17 @@ import SideBar from "./components/SideBar";
 import Post from "../../components/Post";
 import Loading from "../../components/Loading";
 import PostButton from "./components/PostButton";
+import PostModal from "./components/PostModal";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const ctoken = sessionStorage.getItem("ctoken");
   const [userData, setUserData] = useState(null);
   const [dataPosts, setDataPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const ctoken = sessionStorage.getItem("ctoken");
   const [showSideBar, setShowSideBar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,17 +50,28 @@ function HomePage() {
     console.log(showSideBar);
   };
 
+  const handleShowModal = (val) => {
+    setShowModal(val);
+
+    console.log(val);
+  };
+
   return (
     <>
       <NavBar handleSideBar={handleSideBar} />
       {showSideBar && <SideBar handleLogout={handleLogout} />}
+
       {loading ? (
         <Loading />
       ) : (
         <div className="p-5">
           <div className="flex justify-end">
-            <PostButton />
+            <PostButton onClick={() => handleShowModal(true)} />
           </div>
+          <PostModal
+            userId={userData._id}
+            display={!showModal ? "hidden" : "flex"}
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
             {dataPosts.map((post) => (
               <Post

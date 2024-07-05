@@ -2,7 +2,7 @@ function Loading() {
   return (
     <>
       <div
-        className="loading-container flex items-center justify-center absolute z-10"
+        className="loading-container flex items-center justify-center absolute z-1000"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.55)" }}
       >
         <div
