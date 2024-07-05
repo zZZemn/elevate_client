@@ -7,6 +7,7 @@
   width: 100vw;
 }
 
+/* s */
 .bg-login {
   height: calc(100vh - 50px);
   background-image: url("https://images.pexels.com/photos/1843717/pexels-photo-1843717.jpeg?auto=compress&cs=tinysrgb&w=1200");
@@ -16,3 +17,15 @@
 .bg-login-form {
   background-color: white;
 }
+/* e */
+
+/* s */
+.modal {
+  background-color: rgba(0, 0, 0, 0.795);
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+/* e */
