@@ -52,7 +52,6 @@ function HomePage() {
 
   const handleShowModal = (val) => {
     setShowModal(val);
-
     console.log(val);
   };
 
@@ -71,6 +70,7 @@ function HomePage() {
           <PostModal
             userId={userData._id}
             display={!showModal ? "hidden" : "flex"}
+            closeModal={() => handleShowModal(false)}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
             {dataPosts.map((post) => (

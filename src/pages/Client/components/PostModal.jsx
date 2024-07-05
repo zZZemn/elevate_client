@@ -4,10 +4,9 @@ import Loading from "../../../components/Loading";
 import FormTextField from "../../../components/FormTextField";
 import FormBtnSubmit from "../../../components/FormBtnSubmit";
 import FormFileUpload from "../../../components/FormFileUpload";
-import PostActionButton from "../../../components/PostActionButton";
 import CloseIcon from "../../../components/Icons/CloseIcon";
 
-function PostModal({ userId, display }) {
+function PostModal({ userId, display, closeModal }) {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -76,7 +75,9 @@ function PostModal({ userId, display }) {
           onSubmit={handleSubmit}
         >
           <div className="absolute right-3 top-3">
-            <PostActionButton IconComponent={CloseIcon} isDisabled={false} />
+            <button type="reset" onClick={closeModal}>
+              <CloseIcon />
+            </button>
           </div>
           <center className="font-bold text-2xl">Upload</center>
           <FormTextField
