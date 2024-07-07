@@ -4,7 +4,7 @@ import LandingNavBar from "../components/LandingNavBar";
 import Loading from "../components/Loading";
 import FormBtnSubmit from "../components/FormBtnSubmit";
 import FormTextField from "../components/FormTextField";
-import FormSelect from "../components/formSelect";
+import FormSelect from "../components/FormSelect";
 import Alert from "../components/Alert";
 
 function Signup() {
