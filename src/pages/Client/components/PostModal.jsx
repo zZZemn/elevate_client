@@ -46,15 +46,12 @@ function PostModal({ userId, display, closeModal }) {
     form.append("userId", formData.userId);
     form.append("caption", formData.caption);
     formData.works.forEach((file, index) => {
-      form.append(`works[${index}]`, file);
+      form.append("works", file); // Removed the index from the key
     });
 
     try {
-      const response = await axios.post(apiUrl + "/post", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      // Removed the "Content-Type" header to let the browser set it automatically
+      const response = await axios.post(apiUrl + "/post", form);
       setSuccess(true);
       console.log("Form submitted successfully:", response.data);
     } catch (err) {
@@ -81,14 +78,14 @@ function PostModal({ userId, display, closeModal }) {
           </div>
           <center className="font-bold text-2xl">Upload</center>
           <FormTextField
-            type={"text"}
-            label={"Caption"}
-            name={"caption"}
+            type="text"
+            label="Caption"
+            name="caption"
             value={formData.caption}
             onChange={handleChange}
           />
-          <FormFileUpload label={"Images"} onChange={handleFileUpload} />
-          <FormBtnSubmit label={"Upload"} />
+          <FormFileUpload label="Images" onChange={handleFileUpload} />
+          <FormBtnSubmit label="Upload" />
           {error && <div className="text-red-500 mt-2">{error}</div>}
           {success && (
             <div className="text-green-500 mt-2">Submitted successfully!</div>
