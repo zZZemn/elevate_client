@@ -13,6 +13,7 @@ function HomePage() {
   const ctoken = sessionStorage.getItem("ctoken");
   const [userData, setUserData] = useState(null);
   const [dataPosts, setDataPosts] = useState(null);
+  const [likes, setLikes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
@@ -38,13 +39,26 @@ function HomePage() {
     fetchData();
   }, [apiUrl, ctoken]);
 
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const likesMap = {};
+      for (const post of dataPosts) {
+        const isLiked = await checkReaction(post._id);
+        likesMap[post._id] = isLiked;
+      }
+      setLikes(likesMap);
+    };
+
+    fetchLikes();
+  }, [dataPosts]);
+
   const handleLogout = () => {
     sessionStorage.removeItem("ctoken");
     console.log("Token removed");
     window.location.reload();
   };
 
-  console.log(ctoken);
+  // console.log(ctoken);
 
   const handleSideBar = () => {
     setShowSideBar(!showSideBar);
@@ -54,6 +68,19 @@ function HomePage() {
   const handleShowModal = (val) => {
     setShowModal(val);
     console.log(val);
+  };
+
+  const checkReaction = async (postId) => {
+    try {
+      const response = await axios.get(
+        apiUrl + "/react/" + postId + "/" + userData._id
+      );
+      console.log(response);
+      return response.data.reacted;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   };
 
   const handleReaction = (postId, reactionType) => {
@@ -91,16 +118,19 @@ function HomePage() {
             closeModal={() => handleShowModal(false)}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
-            {dataPosts.map((post) => (
-              <Post
-                key={post._id}
-                post={post}
-                btnLikeDisable={false}
-                btnCommentDisable={false}
-                btnShareDisable={false}
-                handleReaction={() => handleReaction(post._id, 1)}
-              />
-            ))}
+            {dataPosts.map((post) => {
+              return (
+                <Post
+                  key={post._id}
+                  post={post}
+                  btnLikeDisable={false}
+                  btnCommentDisable={false}
+                  btnShareDisable={false}
+                  isLiked={likes[post._id] || false}
+                  handleReaction={() => handleReaction(post._id, 1)}
+                />
+              );
+            })}
           </div>
         </div>
       )}

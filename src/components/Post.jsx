@@ -1,5 +1,6 @@
 import PostActionButton from "../components/PostActionButton";
 import HeartIcon from "../components/Icons/HeartIcon";
+import HeartIconSolid from "./Icons/HeartIconSolid";
 import CommentIcon from "../components/Icons/CommentIcon";
 import ShareIcon from "../components/Icons/ShareIcon";
 
@@ -8,6 +9,7 @@ function Post({
   btnLikeDisable,
   btnCommentDisable,
   btnShareDisable,
+  isLiked,
   handleReaction,
 }) {
   return (
@@ -31,7 +33,7 @@ function Post({
         </div>
         <div className="flex mt-2">
           <PostActionButton
-            IconComponent={HeartIcon}
+            IconComponent={isLiked ? HeartIconSolid : HeartIcon}
             isDisabled={btnLikeDisable}
             handleClick={handleReaction}
           />
