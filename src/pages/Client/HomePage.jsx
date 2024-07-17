@@ -6,6 +6,7 @@ import Post from "../../components/Post";
 import Loading from "../../components/Loading";
 import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
+import react from "@heroicons/react";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -55,6 +56,23 @@ function HomePage() {
     console.log(val);
   };
 
+  const handleReaction = (postId, reactionType) => {
+    const reaction = {
+      userId: userData._id,
+      postId: postId,
+      reaction: reactionType,
+    };
+
+    console.log(reaction);
+
+    axios
+      .post(apiUrl + "/react", reaction)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <>
       <NavBar handleSideBar={handleSideBar} />
@@ -80,6 +98,7 @@ function HomePage() {
                 btnLikeDisable={false}
                 btnCommentDisable={false}
                 btnShareDisable={false}
+                handleReaction={() => handleReaction(post._id, 1)}
               />
             ))}
           </div>

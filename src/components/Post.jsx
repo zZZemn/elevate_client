@@ -3,7 +3,13 @@ import HeartIcon from "../components/Icons/HeartIcon";
 import CommentIcon from "../components/Icons/CommentIcon";
 import ShareIcon from "../components/Icons/ShareIcon";
 
-function Post({ post, btnLikeDisable, btnCommentDisable, btnShareDisable }) {
+function Post({
+  post,
+  btnLikeDisable,
+  btnCommentDisable,
+  btnShareDisable,
+  handleReaction,
+}) {
   return (
     <>
       <div key={post._id} className="bg-white p-2 rounded shadow w-4/5">
@@ -27,6 +33,7 @@ function Post({ post, btnLikeDisable, btnCommentDisable, btnShareDisable }) {
           <PostActionButton
             IconComponent={HeartIcon}
             isDisabled={btnLikeDisable}
+            handleClick={handleReaction}
           />
           <PostActionButton
             IconComponent={CommentIcon}
