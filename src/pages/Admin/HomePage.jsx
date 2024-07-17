@@ -1,6 +1,9 @@
+import NavBar from "./components/NavBar";
+
 function HomePage() {
   return (
     <>
+      <NavBar />
       <table className="table-fixed w-full border-gray-600">
         <thead className="bg-gray-200 sticky top-0">
           <tr>
