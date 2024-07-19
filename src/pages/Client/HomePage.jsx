@@ -6,18 +6,32 @@ import Post from "../../components/Post";
 import Loading from "../../components/Loading";
 import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
-import react from "@heroicons/react";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const ctoken = sessionStorage.getItem("ctoken");
   const [userData, setUserData] = useState(null);
-  const [dataPosts, setDataPosts] = useState(null);
+  const [dataPosts, setDataPosts] = useState([]);
   const [likes, setLikes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const fetchLikes = async (posts) => {
+    if (!posts || posts.length === 0) {
+      return;
+    }
+
+    const likesMap = {};
+    for (const post of posts) {
+      const isLiked = await checkReaction(post._id);
+      likesMap[post._id] = isLiked;
+    }
+    setLikes(likesMap);
+
+    console.log("Fetch function");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,16 +54,7 @@ function HomePage() {
   }, [apiUrl, ctoken]);
 
   useEffect(() => {
-    const fetchLikes = async () => {
-      const likesMap = {};
-      for (const post of dataPosts) {
-        const isLiked = await checkReaction(post._id);
-        likesMap[post._id] = isLiked;
-      }
-      setLikes(likesMap);
-    };
-
-    fetchLikes();
+    fetchLikes(dataPosts);
   }, [dataPosts]);
 
   const handleLogout = () => {
@@ -57,8 +62,6 @@ function HomePage() {
     console.log("Token removed");
     window.location.reload();
   };
-
-  // console.log(ctoken);
 
   const handleSideBar = () => {
     setShowSideBar(!showSideBar);
@@ -96,6 +99,7 @@ function HomePage() {
       .post(apiUrl + "/react", reaction)
       .then((response) => {
         console.log(response);
+        fetchLikes(dataPosts);
       })
       .catch((err) => console.error(err));
   };
