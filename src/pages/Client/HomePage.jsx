@@ -6,6 +6,7 @@ import Post from "../../components/Post";
 import Loading from "../../components/Loading";
 import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
+import Comments from "./components/Comments";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -17,6 +18,10 @@ function HomePage() {
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  // Comments
+  const [showComments, setShowComments] = useState(false);
+  const [postViewComments, setPostViewComments] = useState([]);
 
   const fetchLikes = async (posts) => {
     if (!posts || posts.length === 0) {
@@ -70,7 +75,11 @@ function HomePage() {
 
   const handleShowModal = (val) => {
     setShowModal(val);
-    console.log(val);
+    setShowComments(val);
+  };
+
+  const handleShowComment = () => {
+    setShowComments(true);
   };
 
   const checkReaction = async (postId) => {
@@ -121,6 +130,11 @@ function HomePage() {
             display={!showModal ? "hidden" : "flex"}
             closeModal={() => handleShowModal(false)}
           />
+          <Comments
+            postDetails={postViewComments}
+            display={!showComments ? "hidden" : "flex"}
+            closeModal={() => handleShowModal(false)}
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
             {dataPosts.map((post) => {
               return (
@@ -132,6 +146,7 @@ function HomePage() {
                   btnShareDisable={false}
                   isLiked={likes[post._id] || false}
                   handleReaction={() => handleReaction(post._id, 1)}
+                  showComments={() => handleShowComment()}
                 />
               );
             })}

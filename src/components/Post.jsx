@@ -11,6 +11,7 @@ function Post({
   btnShareDisable,
   isLiked,
   handleReaction,
+  showComments,
 }) {
   return (
     <>
@@ -40,6 +41,7 @@ function Post({
           <PostActionButton
             IconComponent={CommentIcon}
             isDisabled={btnCommentDisable}
+            handleClick={showComments}
           />
           <PostActionButton
             IconComponent={ShareIcon}
