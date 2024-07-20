@@ -27,7 +27,7 @@ function Post({
         </div>
         <div className="mt-4 bg-black flex justify-center">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXOmr3zAEaBLWe9jQbBVgDAMORmnpRzHO-tQ&s"
+            src="https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="
             alt="sample"
           />
         </div>
