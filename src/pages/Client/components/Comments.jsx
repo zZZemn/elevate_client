@@ -4,9 +4,14 @@ import CloseIcon from "../../../components/Icons/CloseIcon";
 import SendIcon from "../../../components/Icons/SendIcon";
 import { comment } from "postcss";
 
-function Comments({ post, display, closeModal }) {
+function Comments({ post, display, closeModal, userId }) {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [comments, setComments] = useState([]);
+  const [formData, setFormData] = useState({
+    userId: userId,
+    postId: null,
+    comment: "",
+  });
 
   console.log(post._id);
 
@@ -15,25 +20,63 @@ function Comments({ post, display, closeModal }) {
       return;
     }
 
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/comment/${post._id}`);
+    setFormData((prevData) => ({
+      ...prevData,
+      postId: post._id,
+    }));
 
-        console.log(`${apiUrl}/comment/${post._id}`);
-        setComments(response.data);
-      } catch (err) {
-        console.error(err);
-        return false;
-      }
-    };
-
-    fetchData();
+    fetchComment();
   }, [post]);
 
+  const fetchComment = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/comment/${post._id}`);
+
+      console.log(`${apiUrl}/comment/${post._id}`);
+      setComments(response.data);
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   useEffect(() => {
-    console.log("Comments |");
-    console.log(comments);
-  }, [comments]);
+    console.log(formData);
+  }, [formData]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(`${apiUrl}/comment`, formData)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          fetchComment();
+          setFormData((prevData) => ({
+            ...prevData,
+            comment: "",
+          }));
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("Error message: ", error.response.data.message);
+        } else {
+          console.error("Error message:", error.message);
+        }
+      });
+  };
 
   return (
     <>
@@ -74,20 +117,25 @@ function Comments({ post, display, closeModal }) {
                         comment.commentedBy.lastName}
                     </p>
                   </div>
-                  <p className="text-white text-sm mt-3 ml-8">{comment.comment}</p>
+                  <p className="text-white text-sm mt-3 ml-8">
+                    {comment.comment}
+                  </p>
                 </div>
               );
             })}
           </div>
-          <div className="flex mt-10">
+          <form className="flex mt-10" onSubmit={handleSubmit}>
             <input
+              name="comment"
+              onChange={handleChange}
+              value={formData.comment}
               type="text"
               className="w-full border border-gray-900 rounded-md p-1 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-black focus:border-transparent"
             />
-            <button className="bg-white rounded-md p-1 mx-1">
+            <button type="submit" className="bg-white rounded-md p-1 mx-1">
               <SendIcon />
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </>

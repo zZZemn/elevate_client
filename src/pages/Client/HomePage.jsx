@@ -137,6 +137,7 @@ function HomePage() {
             post={postViewComments}
             display={!showComments ? "hidden" : "flex"}
             closeModal={() => handleShowModal(false)}
+            userId={userData._id}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
             {dataPosts.map((post) => {
