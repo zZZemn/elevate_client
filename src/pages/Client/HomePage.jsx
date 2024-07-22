@@ -21,7 +21,9 @@ function HomePage() {
 
   // Comments
   const [showComments, setShowComments] = useState(false);
-  const [postViewComments, setPostViewComments] = useState([]);
+  const [postViewComments, setPostViewComments] = useState({
+    postedBy: "",
+  });
 
   const fetchLikes = async (posts) => {
     if (!posts || posts.length === 0) {
@@ -78,8 +80,9 @@ function HomePage() {
     setShowComments(val);
   };
 
-  const handleShowComment = () => {
+  const handleShowComment = (post) => {
     setShowComments(true);
+    setPostViewComments(post);
   };
 
   const checkReaction = async (postId) => {
@@ -131,7 +134,7 @@ function HomePage() {
             closeModal={() => handleShowModal(false)}
           />
           <Comments
-            postDetails={postViewComments}
+            post={postViewComments}
             display={!showComments ? "hidden" : "flex"}
             closeModal={() => handleShowModal(false)}
           />
@@ -146,7 +149,7 @@ function HomePage() {
                   btnShareDisable={false}
                   isLiked={likes[post._id] || false}
                   handleReaction={() => handleReaction(post._id, 1)}
-                  showComments={() => handleShowComment()}
+                  showComments={() => handleShowComment(post)}
                 />
               );
             })}
