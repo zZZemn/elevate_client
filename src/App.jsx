@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NoPage from "./pages/NoPage";
 import ClientHomePage from "./pages/Client/HomePage";
+import ClientProfilePage from "./pages/Client/ProfilePage";
 import AdminHomePage from "./pages/Admin/HomePage";
 import "./App.css";
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<ClientHomePage />} />
             <Route path="/home" element={<ClientHomePage />} />
             <Route path="*" element={<Navigate to="/home" />} />
+            <Route path="/profile/:username" element={<ClientProfilePage />} />
           </>
         ) : userType === "admin" ? (
           <>

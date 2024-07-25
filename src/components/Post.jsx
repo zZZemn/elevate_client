@@ -3,6 +3,7 @@ import HeartIcon from "../components/Icons/HeartIcon";
 import HeartIconSolid from "./Icons/HeartIconSolid";
 import CommentIcon from "../components/Icons/CommentIcon";
 import ShareIcon from "../components/Icons/ShareIcon";
+import { Link } from "react-router-dom";
 
 function Post({
   post,
@@ -16,7 +17,10 @@ function Post({
   return (
     <>
       <div key={post._id} className="bg-white p-2 rounded shadow w-4/5">
-        <div className="flex items-center">
+        <Link
+          className="flex items-center"
+          to={`/profile/${post.postedBy.username}`}
+        >
           <img
             src={post.postedBy.picture}
             alt={`${post.postedBy.firstName}'s profile`}
@@ -25,7 +29,7 @@ function Post({
           <p className="text-sm font-medium mx-3">
             {post.postedBy.firstName + " " + post.postedBy.lastName}
           </p>
-        </div>
+        </Link>
         <div className="mt-4 bg-black flex justify-center">
           <img
             src="https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="

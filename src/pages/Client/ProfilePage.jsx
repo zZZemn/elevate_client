@@ -8,7 +8,7 @@ import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 
-function HomePage() {
+function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const ctoken = sessionStorage.getItem("ctoken");
   const [userData, setUserData] = useState(null);
@@ -123,46 +123,9 @@ function HomePage() {
         <SideBar handleLogout={handleLogout} userData={userData} />
       )}
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="p-5">
-          <div className="flex justify-end">
-            <PostButton onClick={() => handleShowModal(true)} />
-          </div>
-          <PostModal
-            userId={userData._id}
-            display={!showModal ? "hidden" : "flex"}
-            closeModal={() => handleShowModal(false)}
-          />
-          <Comments
-            post={postViewComments}
-            display={!showComments ? "hidden" : "flex"}
-            closeModal={() => handleShowModal(false)}
-            userId={userData._id}
-          />
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5 max-w-screen-lg">
-              {dataPosts.map((post) => {
-                return (
-                  <Post
-                    key={post._id}
-                    post={post}
-                    btnLikeDisable={false}
-                    btnCommentDisable={false}
-                    btnShareDisable={false}
-                    isLiked={likes[post._id] || false}
-                    handleReaction={() => handleReaction(post._id, 1)}
-                    showComments={() => handleShowComment(post)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+      {loading ? <Loading /> : <div className="p-5">Profile</div>}
     </>
   );
 }
 
-export default HomePage;
+export default ProfilePage;
