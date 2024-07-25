@@ -139,21 +139,23 @@ function HomePage() {
             closeModal={() => handleShowModal(false)}
             userId={userData._id}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5">
-            {dataPosts.map((post) => {
-              return (
-                <Post
-                  key={post._id}
-                  post={post}
-                  btnLikeDisable={false}
-                  btnCommentDisable={false}
-                  btnShareDisable={false}
-                  isLiked={likes[post._id] || false}
-                  handleReaction={() => handleReaction(post._id, 1)}
-                  showComments={() => handleShowComment(post)}
-                />
-              );
-            })}
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5 max-w-screen-lg">
+              {dataPosts.map((post) => {
+                return (
+                  <Post
+                    key={post._id}
+                    post={post}
+                    btnLikeDisable={false}
+                    btnCommentDisable={false}
+                    btnShareDisable={false}
+                    isLiked={likes[post._id] || false}
+                    handleReaction={() => handleReaction(post._id, 1)}
+                    showComments={() => handleShowComment(post)}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

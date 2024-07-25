@@ -6,7 +6,7 @@ import SettingsIcon from "../../../components/Icons/SettingsIcon";
 function SideBar({ handleLogout }) {
   return (
     <>
-      <div className="bg-black text-white absolute p-5 right-0 sm:hidden">
+      <div className="bg-black text-white absolute p-5 right-0">
         <ul>
           <li className="py-2">
             <button className="flex">

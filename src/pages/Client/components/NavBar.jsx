@@ -8,7 +8,7 @@ function NavBar({ handleSideBar }) {
       <div className="nav-bar flex justify-between bg-black text-white py-3">
         <h5 className="mx-5">ELEVATE</h5>
         <div>
-          <div className="nav-bar-links hidden sm:flex">
+          <div className="nav-bar-links hidden">
             <Link className="mx-5" to="/home">
               Home
             </Link>
@@ -20,7 +20,7 @@ function NavBar({ handleSideBar }) {
             </Link>
           </div>
         </div>
-        <button className="mx-5 sm:hidden" onClick={handleSideBar}>
+        <button className="mx-5" onClick={handleSideBar}>
           <MenuIcon />
         </button>
       </div>
