@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -13,16 +14,24 @@ function ProfilePage() {
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
 
+  //   profile visited
+  const { username } = useParams();
+  const [visitedData, setVisitedData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userResponse, postResponse] = await Promise.all([
-          axios.get(apiUrl + "/user/" + ctoken),
-          axios.get(apiUrl + "/post"),
-        ]);
+        const [userResponse, postResponse, visitedResponse] = await Promise.all(
+          [
+            axios.get(apiUrl + "/user/" + ctoken),
+            axios.get(apiUrl + "/post"),
+            axios.get(apiUrl + "/user/username/" + username),
+          ]
+        );
 
         setUserData(userResponse.data);
         setDataPosts(postResponse.data);
+        setVisitedData(visitedResponse.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -31,7 +40,7 @@ function ProfilePage() {
     };
 
     fetchData();
-  }, [apiUrl, ctoken]);
+  }, [apiUrl, ctoken, username]);
 
   const handleLogout = () => {
     sessionStorage.removeItem("ctoken");
@@ -44,6 +53,8 @@ function ProfilePage() {
     console.log(showSideBar);
   };
 
+  console.log(visitedData);
+
   return (
     <>
       <NavBar handleSideBar={handleSideBar} />
@@ -51,7 +62,26 @@ function ProfilePage() {
         <SideBar handleLogout={handleLogout} userData={userData} />
       )}
 
-      {loading ? <Loading /> : <div className="p-5">Profile</div>}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="p-5">
+          <div className="flex items-center justify-center mt-10">
+            <img
+              className="h-32 rounded-full p-1"
+              src={visitedData.picture}
+              alt={`${visitedData.firstName}'s Profile`}
+            />
+            <div>
+              <h1 className="text-4xl font-bold mx-5">
+                {visitedData.firstName + " " + visitedData.lastName}
+              </h1>
+              <h5 className="mx-5">{visitedData.profession}</h5>
+            </div>
+          </div>
+          <hr className="mt-10" />
+        </div>
+      )}
     </>
   );
 }
