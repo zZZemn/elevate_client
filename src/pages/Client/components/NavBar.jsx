@@ -6,7 +6,9 @@ function NavBar({ handleSideBar }) {
   return (
     <>
       <div className="nav-bar flex justify-between bg-black text-white py-3">
-        <h5 className="mx-5">ELEVATE</h5>
+        <Link className="mx-5" to="/home">
+          ELEVATE
+        </Link>
         <div>
           <div className="nav-bar-links hidden">
             <Link className="mx-5" to="/home">
