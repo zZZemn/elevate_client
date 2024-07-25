@@ -4,33 +4,54 @@ import axios from "axios";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Loading from "../../components/Loading";
+import Post from "../../components/Post";
+import Comments from "./components/Comments";
 
 function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const ctoken = sessionStorage.getItem("ctoken");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [dataPosts, setDataPosts] = useState([]);
+  const [likes, setLikes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  // Comments
+  const [showComments, setShowComments] = useState(false);
+  const [postViewComments, setPostViewComments] = useState({
+    postedBy: "",
+  });
 
   //   profile visited
   const { username } = useParams();
   const [visitedData, setVisitedData] = useState([]);
 
+  const fetchLikes = async (posts) => {
+    if (!posts || posts.length === 0) {
+      return;
+    }
+
+    const likesMap = {};
+    for (const post of posts) {
+      const isLiked = await checkReaction(post._id);
+      likesMap[post._id] = isLiked;
+    }
+    setLikes(likesMap);
+
+    console.log("Fetch function");
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userResponse, postResponse, visitedResponse] = await Promise.all(
-          [
-            axios.get(apiUrl + "/user/" + ctoken),
-            axios.get(apiUrl + "/post"),
-            axios.get(apiUrl + "/user/username/" + username),
-          ]
-        );
+        const [userResponse, visitedResponse] = await Promise.all([
+          axios.get(apiUrl + "/user/" + ctoken),
+          axios.get(apiUrl + "/user/username/" + username),
+        ]);
 
         setUserData(userResponse.data);
-        setDataPosts(postResponse.data);
         setVisitedData(visitedResponse.data);
         setLoading(false);
       } catch (error) {
@@ -41,6 +62,30 @@ function ProfilePage() {
 
     fetchData();
   }, [apiUrl, ctoken, username]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const fetchData = async () => {
+      try {
+        const [postResponse] = await Promise.all([
+          axios.get(apiUrl + "/post/" + visitedData._id),
+        ]);
+
+        setDataPosts(postResponse.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [visitedData]);
+
+  useEffect(() => {
+    fetchLikes(dataPosts);
+  }, [dataPosts]);
 
   const handleLogout = () => {
     sessionStorage.removeItem("ctoken");
@@ -53,7 +98,46 @@ function ProfilePage() {
     console.log(showSideBar);
   };
 
-  console.log(visitedData);
+  const handleShowModal = (val) => {
+    setShowModal(val);
+    setShowComments(val);
+  };
+
+  const handleShowComment = (post) => {
+    setShowComments(true);
+    setPostViewComments(post);
+  };
+
+  const checkReaction = async (postId) => {
+    try {
+      const response = await axios.get(
+        apiUrl + "/react/" + postId + "/" + userData._id
+      );
+      console.log(response);
+      return response.data.reacted;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const handleReaction = (postId, reactionType) => {
+    const reaction = {
+      userId: userData._id,
+      postId: postId,
+      reaction: reactionType,
+    };
+
+    console.log(reaction);
+
+    axios
+      .post(apiUrl + "/react", reaction)
+      .then((response) => {
+        console.log(response);
+        fetchLikes(dataPosts);
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <>
@@ -80,6 +164,35 @@ function ProfilePage() {
             </div>
           </div>
           <hr className="mt-10" />
+
+          <Comments
+            post={postViewComments}
+            display={!showComments ? "hidden" : "flex"}
+            closeModal={() => handleShowModal(false)}
+            userId={userData._id}
+          />
+
+          <div className="flex flex-col items-center">
+            {dataPosts.map((post) => {
+              return (
+                <div
+                  className="mt-5 flex justify-center"
+                  key={post._id + "-div"}
+                >
+                  <Post
+                    key={post._id}
+                    post={post}
+                    btnLikeDisable={false}
+                    btnCommentDisable={false}
+                    btnShareDisable={false}
+                    isLiked={likes[post._id] || false}
+                    handleReaction={() => handleReaction(post._id, 1)}
+                    showComments={() => handleShowComment(post)}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </>
