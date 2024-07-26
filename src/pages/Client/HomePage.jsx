@@ -130,17 +130,20 @@ function HomePage() {
           <div className="flex justify-end">
             <PostButton onClick={() => handleShowModal(true)} />
           </div>
+
           <PostModal
             userId={userData._id}
             display={!showModal ? "hidden" : "flex"}
             closeModal={() => handleShowModal(false)}
           />
+
           <Comments
             post={postViewComments}
             display={!showComments ? "hidden" : "flex"}
             closeModal={() => handleShowModal(false)}
             userId={userData._id}
           />
+
           <div className="flex justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5 max-w-screen-lg">
               {dataPosts.map((post) => {

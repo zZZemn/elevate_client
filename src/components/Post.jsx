@@ -30,12 +30,15 @@ function Post({
             {post.postedBy.firstName + " " + post.postedBy.lastName}
           </p>
         </Link>
-        <div className="mt-4 bg-black flex justify-center">
+        <Link
+          className="mt-4 bg-black flex justify-center"
+          to={`/post/${post._id}`}
+        >
           <img
             src="https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="
             alt="sample"
           />
-        </div>
+        </Link>
         <div className="flex mt-2">
           <PostActionButton
             IconComponent={isLiked ? HeartIconSolid : HeartIcon}
