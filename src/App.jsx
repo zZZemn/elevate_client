@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import NoPage from "./pages/NoPage";
 import ClientHomePage from "./pages/Client/HomePage";
 import ClientProfilePage from "./pages/Client/ProfilePage";
+import UserPost from "./pages/Client/Post";
 import AdminHomePage from "./pages/Admin/HomePage";
 import "./App.css";
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/home" element={<ClientHomePage />} />
             <Route path="*" element={<Navigate to="/home" />} />
             <Route path="/profile/:username" element={<ClientProfilePage />} />
+            <Route path="/post/:postId" element={<UserPost />} />
           </>
         ) : userType === "admin" ? (
           <>
