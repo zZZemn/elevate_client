@@ -14,6 +14,19 @@ function Post({
   handleReaction,
   showComments,
 }) {
+  const baseURL = `${window.location.protocol}//${window.location.host}`;
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Text copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
+
   return (
     <>
       <div key={post._id} className="bg-white p-2 rounded shadow w-4/5">
@@ -53,6 +66,9 @@ function Post({
           <PostActionButton
             IconComponent={ShareIcon}
             isDisabled={btnShareDisable}
+            handleClick={() =>
+              copyToClipboard(baseURL + "/post/" + post._id)
+            }
           />
         </div>
       </div>

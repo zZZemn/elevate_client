@@ -46,6 +46,7 @@ function App() {
             <Route path="/home" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/profile/:username" element={<ClientProfilePage />} />
             <Route path="*" element={<NoPage />} />
           </>
         )}
