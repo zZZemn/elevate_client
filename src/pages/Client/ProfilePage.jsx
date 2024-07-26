@@ -26,7 +26,12 @@ function ProfilePage() {
 
   //   profile visited
   const { username } = useParams();
-  const [visitedData, setVisitedData] = useState([]);
+  const [visitedData, setVisitedData] = useState({
+    firstName: "",
+    lastName: "",
+    picture: "https://cdn-icons-png.flaticon.com/512/456/456212.png",
+    userType: "",
+  });
 
   const fetchLikes = async (posts) => {
     if (!posts || posts.length === 0) {
@@ -44,6 +49,8 @@ function ProfilePage() {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     const fetchData = async () => {
       try {
         const [userResponse, visitedResponse] = await Promise.all([
@@ -149,7 +156,7 @@ function ProfilePage() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="p-5">
+        <div className="p-5 overflow-hidden">
           <div className="flex items-center justify-center mt-10">
             <img
               className="h-32 rounded-full p-1"
