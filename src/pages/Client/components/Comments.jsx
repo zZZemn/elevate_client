@@ -98,7 +98,7 @@ function Comments({ post, display, closeModal, userId }) {
               {post.postedBy.firstName + " " + post.postedBy.lastName}
             </p>
           </div>
-          <div className="mt-5">
+          <div className="mt-5 h-4/6 overflow-auto">
             {comments.map((comment, index) => {
               return (
                 <div

@@ -163,8 +163,8 @@ function UserPost() {
             closeModal={() => handleShowModal(false)}
             userId={userData._id}
           />
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-5 max-w-screen-lg">
+          <div className="flex justify-center mt-5">
+            <div className="flex justify-center mt-5 max-w-screen-sm">
               {dataPosts.map((post) => {
                 return (
                   <Post
