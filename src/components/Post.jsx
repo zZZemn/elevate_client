@@ -52,6 +52,9 @@ function Post({
             alt="sample"
           />
         </Link>
+        <div>
+          <p className="text-xs ml-1">{post.caption}</p>
+        </div>
         <div className="flex mt-2">
           <PostActionButton
             IconComponent={isLiked ? HeartIconSolid : HeartIcon}
@@ -66,9 +69,7 @@ function Post({
           <PostActionButton
             IconComponent={ShareIcon}
             isDisabled={btnShareDisable}
-            handleClick={() =>
-              copyToClipboard(baseURL + "/post/" + post._id)
-            }
+            handleClick={() => copyToClipboard(baseURL + "/post/" + post._id)}
           />
         </div>
       </div>
