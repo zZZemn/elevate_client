@@ -11,7 +11,7 @@ function Alert({ alertType, alertTitle, alertMessage }) {
   return (
     <>
       <div
-        className={`alert-component ${alertClass} p-3 rounded-sm text-md absolute right-0 m-2 opacity-70`}
+        className={`alert-component ${alertClass} p-3 rounded-sm text-md absolute right-0 top-0 m-2 opacity-70 pointer-events-none`}
         role="alert"
       >
         <p className="font-bold">{alertTitle}</p>

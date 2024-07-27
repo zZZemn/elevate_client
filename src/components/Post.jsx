@@ -4,6 +4,8 @@ import HeartIconSolid from "./Icons/HeartIconSolid";
 import CommentIcon from "../components/Icons/CommentIcon";
 import ShareIcon from "../components/Icons/ShareIcon";
 import { Link } from "react-router-dom";
+import Alert from "./Alert";
+import { useState } from "react";
 
 function Post({
   post,
@@ -14,6 +16,7 @@ function Post({
   handleReaction,
   showComments,
 }) {
+  const [copied, setCopied] = useState(false);
   const baseURL = `${window.location.protocol}//${window.location.host}`;
 
   const copyToClipboard = (text) => {
@@ -21,6 +24,11 @@ function Post({
       .writeText(text)
       .then(() => {
         console.log("Text copied to clipboard");
+
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 1000);
       })
       .catch((err) => {
         console.error("Failed to copy text: ", err);
@@ -29,6 +37,13 @@ function Post({
 
   return (
     <>
+      {copied && (
+        <Alert
+          alertType="success"
+          alertTitle="Share"
+          alertMessage={"Link copied to clipboard."}
+        />
+      )}
       <div key={post._id} className="bg-white p-2 rounded shadow w-4/5">
         <Link
           className="flex items-center"
