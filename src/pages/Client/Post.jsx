@@ -9,7 +9,11 @@ import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
-import { handleSideBar, handleShowModal } from "../../utils/handleComponents";
+import {
+  handleSideBar,
+  handleShowModal,
+  handleShowComment,
+} from "../../utils/handleComponents";
 
 function UserPost() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -95,11 +99,6 @@ function UserPost() {
     fetchLikes(dataPosts);
   }, [dataPosts]);
 
-  const handleShowComment = (post) => {
-    setShowComments(true);
-    setPostViewComments(post);
-  };
-
   const checkReaction = async (postId) => {
     try {
       const response = await axios.get(
@@ -165,7 +164,13 @@ function UserPost() {
                     btnShareDisable={false}
                     isLiked={likes[post._id] || false}
                     handleReaction={() => handleReaction(post._id, 1)}
-                    showComments={() => handleShowComment(post)}
+                    showComments={() =>
+                      handleShowComment(
+                        setShowComments,
+                        setPostViewComments,
+                        post
+                      )
+                    }
                   />
                 );
               })}

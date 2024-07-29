@@ -9,7 +9,11 @@ import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
-import { handleSideBar, handleShowModal } from "../../utils/handleComponents";
+import {
+  handleSideBar,
+  handleShowModal,
+  handleShowComment,
+} from "../../utils/handleComponents";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -68,11 +72,6 @@ function HomePage() {
   useEffect(() => {
     fetchLikes(dataPosts);
   }, [dataPosts]);
-
-  const handleShowComment = (post) => {
-    setShowComments(true);
-    setPostViewComments(post);
-  };
 
   const checkReaction = async (postId) => {
     try {
@@ -155,7 +154,13 @@ function HomePage() {
                     btnShareDisable={false}
                     isLiked={likes[post._id] || false}
                     handleReaction={() => handleReaction(post._id, 1)}
-                    showComments={() => handleShowComment(post)}
+                    showComments={() =>
+                      handleShowComment(
+                        setShowComments,
+                        setPostViewComments,
+                        post
+                      )
+                    }
                   />
                 );
               })}
