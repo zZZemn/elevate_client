@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -12,13 +13,15 @@ import { handleLogout } from "../../utils/auth";
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const ctoken = sessionStorage.getItem("ctoken");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [dataPosts, setDataPosts] = useState([]);
   const [likes, setLikes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   // Comments
   const [showComments, setShowComments] = useState(false);

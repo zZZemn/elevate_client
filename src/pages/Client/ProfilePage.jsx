@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -18,6 +18,8 @@ function ProfilePage() {
   const [error, setError] = useState(null);
   const [showSideBar, setShowSideBar] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   // Comments
   const [showComments, setShowComments] = useState(false);

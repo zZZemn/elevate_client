@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutIcon from "../../../components/Icons/LogoutIcon";
 import ProfileIcon from "../../../components/Icons/ProfileIcon";
 import SettingsIcon from "../../../components/Icons/SettingsIcon";
 
 function SideBar({ handleLogout, userData }) {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="bg-black text-white absolute p-5 right-0">
@@ -20,7 +22,7 @@ function SideBar({ handleLogout, userData }) {
             </button>
           </li>
           <li className="py-2">
-            <button className="flex" onClick={handleLogout}>
+            <button className="flex" onClick={() => handleLogout(navigate)}>
               <LogoutIcon /> <span className="mx-2">Log Out</span>
             </button>
           </li>
