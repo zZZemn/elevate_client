@@ -9,6 +9,7 @@ import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
+import { handleSideBar } from "../../utils/handleComponents";
 
 function UserPost() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -94,11 +95,6 @@ function UserPost() {
     fetchLikes(dataPosts);
   }, [dataPosts]);
 
-  const handleSideBar = () => {
-    setShowSideBar(!showSideBar);
-    console.log(showSideBar);
-  };
-
   const handleShowModal = (val) => {
     setShowModal(val);
     setShowComments(val);
@@ -142,7 +138,9 @@ function UserPost() {
 
   return (
     <>
-      <NavBar handleSideBar={handleSideBar} />
+      <NavBar
+        handleSideBar={() => handleSideBar(setShowSideBar, showSideBar)}
+      />
       {showSideBar && (
         <SideBar handleLogout={handleLogout} userData={userData} />
       )}
