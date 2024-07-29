@@ -9,7 +9,7 @@ import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
-import { handleSideBar } from "../../utils/handleComponents";
+import { handleSideBar, handleShowModal } from "../../utils/handleComponents";
 
 function UserPost() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -95,11 +95,6 @@ function UserPost() {
     fetchLikes(dataPosts);
   }, [dataPosts]);
 
-  const handleShowModal = (val) => {
-    setShowModal(val);
-    setShowComments(val);
-  };
-
   const handleShowComment = (post) => {
     setShowComments(true);
     setPostViewComments(post);
@@ -153,7 +148,9 @@ function UserPost() {
           <Comments
             post={postViewComments}
             display={!showComments ? "hidden" : "flex"}
-            closeModal={() => handleShowModal(false)}
+            closeModal={() =>
+              handleShowModal(setShowModal, setShowComments, false)
+            }
             userId={userData._id}
           />
           <div className="flex justify-center mt-5">

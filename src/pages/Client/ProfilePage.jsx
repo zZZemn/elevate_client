@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import Post from "../../components/Post";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
-import { handleSideBar } from "../../utils/handleComponents";
+import { handleSideBar, handleShowModal } from "../../utils/handleComponents";
 
 function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -98,11 +98,6 @@ function ProfilePage() {
     fetchLikes(dataPosts);
   }, [dataPosts]);
 
-  const handleShowModal = (val) => {
-    setShowModal(val);
-    setShowComments(val);
-  };
-
   const handleShowComment = (post) => {
     setShowComments(true);
     setPostViewComments(post);
@@ -170,7 +165,9 @@ function ProfilePage() {
           <Comments
             post={postViewComments}
             display={!showComments ? "hidden" : "flex"}
-            closeModal={() => handleShowModal(false)}
+            closeModal={() =>
+              handleShowModal(setShowModal, setShowComments, false)
+            }
             userId={userData._id}
           />
 
