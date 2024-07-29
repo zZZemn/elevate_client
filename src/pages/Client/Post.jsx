@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 import PostButton from "./components/PostButton";
 import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
+import { handleLogout } from "../../utils/auth";
 
 function UserPost() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -92,12 +93,6 @@ function UserPost() {
   useEffect(() => {
     fetchLikes(dataPosts);
   }, [dataPosts]);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("ctoken");
-    console.log("Token removed");
-    window.location.reload();
-  };
 
   const handleSideBar = () => {
     setShowSideBar(!showSideBar);

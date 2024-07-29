@@ -6,6 +6,7 @@ import SideBar from "./components/SideBar";
 import Loading from "../../components/Loading";
 import Post from "../../components/Post";
 import Comments from "./components/Comments";
+import { handleLogout } from "../../utils/auth";
 
 function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -93,12 +94,6 @@ function ProfilePage() {
   useEffect(() => {
     fetchLikes(dataPosts);
   }, [dataPosts]);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("ctoken");
-    console.log("Token removed");
-    window.location.reload();
-  };
 
   const handleSideBar = () => {
     setShowSideBar(!showSideBar);
