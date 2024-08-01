@@ -5,8 +5,6 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Post from "../../components/Post";
 import Loading from "../../components/Loading";
-import PostButton from "./components/PostButton";
-import PostModal from "./components/PostModal";
 import Comments from "./components/Comments";
 import { handleLogout } from "../../utils/auth";
 import {
