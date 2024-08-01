@@ -12,6 +12,11 @@ import {
   handleShowModal,
   handleShowComment,
 } from "../../utils/handleComponents";
+import {
+  checkReaction,
+  fetchLikes,
+  handleReaction,
+} from "../../utils/reactions";
 
 function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -40,21 +45,6 @@ function ProfilePage() {
     picture: "https://cdn-icons-png.flaticon.com/512/456/456212.png",
     userType: "",
   });
-
-  const fetchLikes = async (posts) => {
-    if (!posts || posts.length === 0) {
-      return;
-    }
-
-    const likesMap = {};
-    for (const post of posts) {
-      const isLiked = await checkReaction(post._id);
-      likesMap[post._id] = isLiked;
-    }
-    setLikes(likesMap);
-
-    console.log("Fetch function");
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -99,39 +89,8 @@ function ProfilePage() {
   }, [visitedData]);
 
   useEffect(() => {
-    fetchLikes(dataPosts);
+    fetchLikes(dataPosts, userData._id, setLikes);
   }, [dataPosts]);
-
-  const checkReaction = async (postId) => {
-    try {
-      const response = await axios.get(
-        apiUrl + "/react/" + postId + "/" + userData._id
-      );
-      console.log(response);
-      return response.data.reacted;
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
-  };
-
-  const handleReaction = (postId, reactionType) => {
-    const reaction = {
-      userId: userData._id,
-      postId: postId,
-      reaction: reactionType,
-    };
-
-    console.log(reaction);
-
-    axios
-      .post(apiUrl + "/react", reaction)
-      .then((response) => {
-        console.log(response);
-        fetchLikes(dataPosts);
-      })
-      .catch((err) => console.error(err));
-  };
 
   return (
     <>
@@ -184,7 +143,9 @@ function ProfilePage() {
                     btnCommentDisable={false}
                     btnShareDisable={false}
                     isLiked={likes[post._id] || false}
-                    handleReaction={() => handleReaction(post._id, 1)}
+                    handleReaction={() =>
+                      handleReaction(post._id, 1, userData, dataPosts, setLikes)
+                    }
                     showComments={() =>
                       handleShowComment(
                         setShowComments,
