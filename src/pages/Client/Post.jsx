@@ -17,6 +17,7 @@ import {
   fetchLikes,
   handleReaction,
 } from "../../utils/reactions";
+import { fetchUserData, fetchPostByPostId } from "../../utils/request";
 
 function UserPost() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -43,44 +44,8 @@ function UserPost() {
   console.log("id: " + postId);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [userResponse] = await Promise.all([
-          axios.get(apiUrl + "/user/" + ctoken),
-        ]);
-
-        setUserData(userResponse.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [apiUrl, ctoken]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [postResponse] = await Promise.all([
-          axios.get(apiUrl + "/post/getpost/" + postId),
-        ]);
-
-        if (postResponse.data.length === 0) {
-          navigate("/home");
-        } else {
-          setDataPosts(postResponse.data);
-          setLoading(false);
-        }
-      } catch (error) {
-        navigate("/home");
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchUserData(ctoken, setUserData, setLoading, setError);
+    fetchPostByPostId(postId, setLoading, setDataPosts, setError, navigate);
   }, [apiUrl, ctoken]);
 
   useEffect(() => {

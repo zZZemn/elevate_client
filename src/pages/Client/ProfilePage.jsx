@@ -17,6 +17,7 @@ import {
   fetchLikes,
   handleReaction,
 } from "../../utils/reactions";
+import { fetchUserAndVisitedData } from "../../utils/request";
 
 function ProfilePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -47,25 +48,14 @@ function ProfilePage() {
   });
 
   useEffect(() => {
-    setLoading(true);
-
-    const fetchData = async () => {
-      try {
-        const [userResponse, visitedResponse] = await Promise.all([
-          axios.get(apiUrl + "/user/" + ctoken),
-          axios.get(apiUrl + "/user/username/" + username),
-        ]);
-
-        setUserData(userResponse.data);
-        setVisitedData(visitedResponse.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchUserAndVisitedData(
+      ctoken,
+      setUserData,
+      setVisitedData,
+      setLoading,
+      setError,
+      username
+    );
   }, [apiUrl, ctoken, username]);
 
   useEffect(() => {

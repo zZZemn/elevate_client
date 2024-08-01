@@ -19,6 +19,7 @@ import {
   fetchLikes,
   handleReaction,
 } from "../../utils/reactions";
+import { fetchUserAndPostData } from "../../utils/request";
 
 function HomePage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -40,23 +41,13 @@ function HomePage() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [userResponse, postResponse] = await Promise.all([
-          axios.get(apiUrl + "/user/" + ctoken),
-          axios.get(apiUrl + "/post"),
-        ]);
-
-        setUserData(userResponse.data);
-        setDataPosts(postResponse.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchUserAndPostData(
+      ctoken,
+      setUserData,
+      setDataPosts,
+      setLoading,
+      setError
+    );
   }, [apiUrl, ctoken]);
 
   useEffect(() => {
